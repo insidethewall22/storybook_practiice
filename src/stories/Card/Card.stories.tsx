@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Text } from "../Text/Text";
-import cat from "../../../public/cat.jpg";
+import cat from "./cat.jpg";
 import Card from "./Card";
+import React from "react";
 
 const meta: Meta<typeof Card> = {
   component: Card,

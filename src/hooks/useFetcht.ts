@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import React from "react";
 
 // export type apiResponse = {};
 export const useFetch = (url: string) => {
   const [data, setData] = useState("123");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>("no error");
+  const [error, setError] = useState("no error");
   useEffect(() => {
     setLoading(true);
     try {

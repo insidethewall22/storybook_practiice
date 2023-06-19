@@ -16,7 +16,7 @@ const preview: Preview = {
     },
   },
 
-  // decorators: [withMaxWidth],
+  decorators: [withMaxWidth],
 };
 
 export default preview;

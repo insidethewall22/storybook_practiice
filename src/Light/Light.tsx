@@ -1,3 +1,5 @@
+import React from "react";
+
 /** some description */
 export type Props = {
   variant: "green" | "yellow" | "red";
