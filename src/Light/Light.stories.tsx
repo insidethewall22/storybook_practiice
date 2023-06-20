@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import Light from "./Light";
 
 // what does this means? <> <typeof Light>
+// This <> is a special Typescript convention see https://www.typescriptlang.org/docs/handbook/2/generics.html
 const meta: Meta<typeof Light> = {
   component: Light,
   title: "Light",
@@ -53,6 +54,9 @@ export const Red: Story = {
 
 export const grouped: Story = {
   // why render: ()  ??
+  // Storybook imports these *.stories.tsx files & analysis them for any "export"ed objects.
+  // It calls the render function to show our Components in Storybook
+  // See https://storybook.js.org/docs/react/api/csf#custom-render-functions
   render: () => (
     // div can be seperated as a single component
     <div

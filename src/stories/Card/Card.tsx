@@ -12,6 +12,7 @@ const layoutSize = (header: ReactNode, footer: ReactNode) => {
   else if (footer) return 125;
   else return 90;
 };
+// Can you add some box-shadow to give the card the feeling of lifting off the page
 const Card = ({ type = "default", body, header, footer }: Props) => {
   return (
     <div
