@@ -59,6 +59,7 @@ const Pokemon = ({ pname }: Props) => {
             <Text as="h3" children={name}></Text>
             <Text
               as="h2"
+              // Can you also show 4 random moves from the moves array that is returned in the API?
               children={`It's height is ${height} and weight is ${weight}.It's weapon is ${
                 held_items?.length != 0
                   ? held_items?.map((i) => {
