@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import React from "react";
 
 // export type apiResponse = {};
-export const useFetch = (url: string) => {
-  const [data, setData] = useState("123");
+export const useFetch = <T>(
+  url: string
+): { data: T | undefined; loading: boolean; error: string } => {
+  const [data, setData] = useState<T>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("no error");
   useEffect(() => {
