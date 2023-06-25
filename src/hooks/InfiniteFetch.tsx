@@ -4,13 +4,13 @@ import React from "react";
 import Card from "../stories/Card/Card";
 import { PokemonCard } from "../stories/Pokemon/PokemonCard";
 import { JSX } from "react/jsx-runtime";
-export const InfiniteFetch = (number: number) => {
+export const InfiniteFetch = ({ number: number }) => {
   const [loading, setLoading] = useState(true);
   const [allPokemons, setAllPokemons] = useState<Array<object>>([]);
   const [lastElement, setLastElement] = useState<Element | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [num, setNum] = useState(number);
-  const TOTAL_NUMBER: number = 1281;
+  const [num, setNum] = useState<number>(number);
+  const TOTAL_NUMBER: number = 20;
 
   const observer = useRef(
     new IntersectionObserver((entries) => {

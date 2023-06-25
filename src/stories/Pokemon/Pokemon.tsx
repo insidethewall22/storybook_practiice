@@ -26,8 +26,9 @@ const Pokemon = ({ pname, isInfinite = false }: Props) => {
   }
   // in storybook control isInfinite cannot be switched, otherwise meet error: Rendered more hooks than during the previous render.
   // return isInfinite ? InfiniteFetch(1) : <PokemonCard {...data} />;
+  // new: fixd by changing InfiniteFetch(1) to  <InfiniteFetch number={1} />
   if (isInfinite) {
-    return InfiniteFetch(1);
+    return <InfiniteFetch number={1} />;
   } else {
     return <PokemonCard {...data} error={error} loading={loading} />;
   }
