@@ -2,25 +2,33 @@ import { useEffect, useState } from "react";
 import React from "react";
 
 // export type apiResponse = {};
-export const useFetch = <T>(
-  url: string
-): { data: T | undefined; loading: boolean; error: string } => {
-  const [data, setData] = useState<T>();
+export const useFetch = (url: string) => {
+  const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("no error");
+  const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     setLoading(true);
     try {
       fetch(url)
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          setError("Something went wrong");
+          console.log(error);
+
+          throw new Error("Something went wrong");
+        })
         .then((actualData) => {
           console.log(actualData);
           setData(actualData);
         });
-    } catch (error: any) {
-      setError(error.message);
+    } catch (e: any) {
+      setError(e);
+      console.log(e);
     }
     setLoading(false);
+    console.log(loading);
   }, []);
   return { data, loading, error };
 };

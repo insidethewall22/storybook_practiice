@@ -3,34 +3,19 @@ import { ReactNode } from "react";
 import { useState } from "react";
 import Card from "../Card/Card";
 import { Text } from "../Text/Text";
+import { useFetch } from "../../hooks/useFetcht";
+import { PokemonCard } from "./PokemonCard";
+import { InfiniteFetch } from "../../hooks/InfiniteFetch";
 
 export type Props = {
   pname?: string | number;
-};
-export const useFetch = (url: string) => {
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("no error");
-  useEffect(() => {
-    setLoading(true);
-    try {
-      fetch(url)
-        .then((response) => response.json())
-        .then((actualData) => {
-          console.log(actualData);
-          setData(actualData);
-        });
-    } catch (error: any) {
-      setError(error.message);
-    }
-    setLoading(false);
-  }, []);
-  return { data, loading, error };
+  isInfinite?: boolean;
 };
 
-const Pokemon = ({ pname }: Props) => {
-  const { data } = useFetch(`https://pokeapi.co/api/v2/pokemon/${pname}`);
-  console.log(data);
+const Pokemon = ({ pname, isInfinite = false }: Props) => {
+  const { data, error, loading } = useFetch(
+    `https://pokeapi.co/api/v2/pokemon/${pname}`
+  );
 
   interface dataFromat {
     sprites: { front_default: string };
@@ -39,31 +24,13 @@ const Pokemon = ({ pname }: Props) => {
     weight: number;
     held_items: { item: { name: string } }[] | [];
   }
-
-  const { sprites, name, height, weight, held_items } = data;
-  return (
-    <>
-      <Card
-        type="default"
-        header={<img src={sprites?.front_default} />}
-        body={
-          <div>
-            <Text as="h3" children={name}></Text>
-            <Text
-              as="h2"
-              children={`It's height is ${height} and weight is ${weight}.It's weapon is ${
-                held_items?.length != 0
-                  ? held_items?.map((i) => {
-                      return i?.item?.name;
-                    })
-                  : "nothing"
-              }`}
-            ></Text>
-          </div>
-        }
-      />
-    </>
-  );
+  // in storybook control isInfinite cannot be switched, otherwise meet error: Rendered more hooks than during the previous render.
+  // return isInfinite ? InfiniteFetch(1) : <PokemonCard {...data} />;
+  if (isInfinite) {
+    return InfiniteFetch(1);
+  } else {
+    return <PokemonCard {...data} error={error} loading={loading} />;
+  }
 };
 
 export default Pokemon;

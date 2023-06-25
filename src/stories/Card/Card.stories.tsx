@@ -70,3 +70,20 @@ export const CardFullDefault: Story = {
   },
   render: (args) => <Card {...args}></Card>,
 };
+
+export const CardError: Story = {
+  args: {
+    type: "default",
+    error: true,
+    errorContent: "this is an error",
+    header: <img src={cat} />,
+    body: (
+      <div>
+        <Text as="h3" children="Card title"></Text>
+        <Text as="h2" children="Card body text"></Text>
+      </div>
+    ),
+    footer: <Text as="h4" children="footer"></Text>,
+  },
+  render: (args) => <Card {...args}></Card>,
+};
