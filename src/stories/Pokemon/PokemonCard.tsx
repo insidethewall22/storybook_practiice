@@ -2,16 +2,41 @@ import React, { forwardRef, Ref, FC, ReactElement } from "react";
 import Card from "../Card/Card";
 import { Text } from "../Text/Text";
 
-export const PokemonCard = forwardRef((data: object, ref: Ref<FC>) => {
+export type Data = {
+  sprites: { front_default: string };
+  name: string;
+  height: number;
+  weight: number;
+  held_items: { item: { name: string } }[];
+  error: string | null;
+  loading: boolean;
+  moves: { move: { name: string } }[];
+  isError: boolean;
+};
+
+export const PokemonCard = forwardRef(function <T extends Data>(
+  data: T,
+  ref: Ref<FC>
+) {
   // do not know how to correctly provide the types for these variables extracted from the API
-  const { sprites, name, height, weight, held_items, error, loading, moves } =
-    data;
+
+  const {
+    sprites,
+    name,
+    height,
+    weight,
+    held_items,
+    error,
+    loading,
+    moves,
+    isError,
+  } = data;
   const getFourRandom = (arr: Array<object>): Array<object> => {
     const shuffled = arr?.sort(() => 0.5 - Math.random());
     return shuffled?.slice(0, 4);
   };
 
-  if (!error) {
+  if (!isError) {
     return (
       <div>
         {/* do not understand why card is not FC type */}
@@ -52,7 +77,7 @@ export const PokemonCard = forwardRef((data: object, ref: Ref<FC>) => {
       <>
         <Card
           type="default"
-          error={true}
+          error={isError}
           errorContent={error}
           loading={loading}
         />

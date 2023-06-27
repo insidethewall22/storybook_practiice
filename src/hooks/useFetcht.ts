@@ -6,6 +6,7 @@ export const useFetch = (url: string) => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isError, setIsError] = useState<boolean>(false);
   useEffect(() => {
     setLoading(true);
     try {
@@ -14,7 +15,8 @@ export const useFetch = (url: string) => {
           if (response.ok) {
             return response.json();
           }
-          setError("Something went wrong");
+          setError(response.status + "");
+          setIsError(true);
           console.log(error);
 
           throw new Error("Something went wrong");
@@ -25,10 +27,11 @@ export const useFetch = (url: string) => {
         });
     } catch (e: any) {
       setError(e);
+      setIsError(true);
       console.log(e);
     }
     setLoading(false);
     console.log(loading);
   }, []);
-  return { data, loading, error };
+  return { data, loading, error, isError };
 };

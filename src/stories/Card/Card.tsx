@@ -9,7 +9,7 @@ export type Props = {
   header?: ReactNode;
   footer?: ReactNode;
   error?: boolean;
-  errorContent?: string;
+  errorContent?: string | null;
   loading?: boolean;
 };
 

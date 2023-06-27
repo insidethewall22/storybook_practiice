@@ -1,9 +1,8 @@
-import { array } from "prop-types";
 import { ReactElement, ReactNode, useEffect, useRef, useState } from "react";
-import React from "react";
-import Card from "../stories/Card/Card";
+
 import { PokemonCard } from "../stories/Pokemon/PokemonCard";
-import { JSX } from "react/jsx-runtime";
+
+import { Data } from "../stories/Pokemon/PokemonCard";
 export const InfiniteFetch = ({ number: number }) => {
   const [loading, setLoading] = useState(true);
   const [allPokemons, setAllPokemons] = useState<Array<object>>([]);
@@ -62,21 +61,29 @@ export const InfiniteFetch = ({ number: number }) => {
   return (
     <>
       {allPokemons.length > 0 &&
-        allPokemons.map(
-          (pokemon: JSX.IntrinsicAttributes & object, i: number) => {
-            return (
-              <div ref={setLastElement} key={i}>
-                {i === allPokemons.length - 1 &&
-                !loading &&
-                num <= TOTAL_NUMBER ? (
-                  <PokemonCard {...pokemon} error={error} loading={loading} />
-                ) : (
-                  <PokemonCard {...pokemon} error={error} loading={loading} />
-                )}
-              </div>
-            );
-          }
-        )}
+        allPokemons.map((pokemon: Data, i: number) => {
+          return (
+            <div ref={setLastElement} key={i}>
+              {i === allPokemons.length - 1 &&
+              !loading &&
+              num <= TOTAL_NUMBER ? (
+                <PokemonCard
+                  {...pokemon}
+                  error={error}
+                  isError={error ? true : false}
+                  loading={loading}
+                />
+              ) : (
+                <PokemonCard
+                  {...pokemon}
+                  error={error}
+                  isError={error ? true : false}
+                  loading={loading}
+                />
+              )}
+            </div>
+          );
+        })}
       <>
         {loading && <p>loading...</p>}
         {num - 1 === TOTAL_NUMBER && <p>It is end </p>}
