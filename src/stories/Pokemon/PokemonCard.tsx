@@ -8,17 +8,20 @@ export type Data = {
   height: number;
   weight: number;
   held_items: { item: { name: string } }[];
+  moves: { move: { name: string } }[];
+};
+export type SideEffect = {
   error: string | null;
   loading: boolean;
-  moves: { move: { name: string } }[];
   isError: boolean;
 };
 
-export const PokemonCard = forwardRef(function <T extends Data>(
+export const PokemonCard = forwardRef(function <T extends Data & SideEffect>(
   data: T,
-  ref: Ref<FC>
+  ref: Ref<React.FC>
 ) {
   // do not know how to correctly provide the types for these variables extracted from the API
+  console.log(data);
 
   const {
     sprites,

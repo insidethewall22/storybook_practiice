@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import React from "react";
-
+import { Data, SideEffect } from "../stories/Pokemon/PokemonCard";
 // export type apiResponse = {};
-export const useFetch = (url: string) => {
+export const useFetch = (url: string): Data & SideEffect => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -14,12 +14,13 @@ export const useFetch = (url: string) => {
         .then((response) => {
           if (response.ok) {
             return response.json();
+          } else {
+            return response.text().then((text) => {
+              setError(text + "");
+              setIsError(true);
+              throw new Error(text);
+            });
           }
-          setError(response.status + "");
-          setIsError(true);
-          console.log(error);
-
-          throw new Error("Something went wrong");
         })
         .then((actualData) => {
           console.log(actualData);
@@ -33,5 +34,16 @@ export const useFetch = (url: string) => {
     setLoading(false);
     console.log(loading);
   }, []);
-  return { data, loading, error, isError };
+  const { sprites, name, height, weight, held_items, moves }: any = data;
+  return {
+    sprites,
+    name,
+    height,
+    weight,
+    held_items,
+    moves,
+    loading,
+    error,
+    isError,
+  };
 };

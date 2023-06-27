@@ -3,12 +3,12 @@ import { ReactElement, ReactNode, useEffect, useRef, useState } from "react";
 import { PokemonCard } from "../stories/Pokemon/PokemonCard";
 
 import { Data } from "../stories/Pokemon/PokemonCard";
-export const InfiniteFetch = ({ number: number }) => {
+export const InfiniteFetch = ({ index }: { index: number }) => {
   const [loading, setLoading] = useState(true);
   const [allPokemons, setAllPokemons] = useState<Array<object>>([]);
   const [lastElement, setLastElement] = useState<Element | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [num, setNum] = useState<number>(number);
+  const [num, setNum] = useState<number>(index);
   const TOTAL_NUMBER: number = 20;
 
   const observer = useRef(
@@ -61,7 +61,7 @@ export const InfiniteFetch = ({ number: number }) => {
   return (
     <>
       {allPokemons.length > 0 &&
-        allPokemons.map((pokemon: Data, i: number) => {
+        allPokemons.map(function <T extends Data>(pokemon: T, i: number) {
           return (
             <div ref={setLastElement} key={i}>
               {i === allPokemons.length - 1 &&
