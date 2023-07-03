@@ -9,6 +9,7 @@ export const InfiniteFetch = ({ index }: { index: number }) => {
   const [lastElement, setLastElement] = useState<Element | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [num, setNum] = useState<number>(index);
+  // There is a Typescript error here as there is no need to add a "number" type when you are assigning a constant with a number value.
   const TOTAL_NUMBER: number = 20;
 
   const observer = useRef(
@@ -61,9 +62,12 @@ export const InfiniteFetch = ({ index }: { index: number }) => {
   return (
     <>
       {allPokemons.length > 0 &&
+        // The below Typescript error can be fixed by replacing all instances of "object" with "Data".
+        // There are a few places in this file where object has been used as the type but they can all be type cast as Data.
         allPokemons.map(function <T extends Data>(pokemon: T, i: number) {
           return (
             <div ref={setLastElement} key={i}>
+              {/* This can be simplified as we are rendering the same thing in both cases. */}
               {i === allPokemons.length - 1 &&
               !loading &&
               num <= TOTAL_NUMBER ? (
