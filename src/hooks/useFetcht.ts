@@ -9,14 +9,19 @@ export const useFetch = (url: string): Data & SideEffect => {
   const [isError, setIsError] = useState<boolean>(false);
   useEffect(() => {
     setLoading(true);
+    const controller = new AbortController();
     try {
-      fetch(url)
+      fetch(url, { signal: controller.signal })
         .then((response) => {
+          setLoading(false);
+          console.log(loading);
           if (response.ok) {
+            setError(null);
+            setIsError(false);
             return response.json();
           } else {
             return response.text().then((text) => {
-              setError(text + "");
+              setError("Ooops, that pokemon name is invalid.");
               setIsError(true);
               throw new Error(text);
             });
@@ -31,9 +36,8 @@ export const useFetch = (url: string): Data & SideEffect => {
       setIsError(true);
       console.log(e);
     }
-    setLoading(false);
-    console.log(loading);
-  }, []);
+    return () => controller.abort();
+  }, [url]);
   const { sprites, name, height, weight, held_items, moves }: any = data;
   return {
     sprites,
